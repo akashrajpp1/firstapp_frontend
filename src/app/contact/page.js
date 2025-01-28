@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 
 const ContactPage = () => {
 
-
   return <>
     <main className="wrapper">
       <style
@@ -96,7 +95,6 @@ const ContactPage = () => {
                                 id="name"
                                 placeholder="Name"
                                 defaultValue=""
-                                ref={emailRef}
                               />
                             </div>
                           </div>
