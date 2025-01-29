@@ -69,6 +69,31 @@ const LoanForm = () => {
         return prefix + uniqueId;
     }
 
+    function calculateEMI(loanAmount, annualInterestRate, tenureInYears) {
+        // Convert annual interest rate to monthly interest rate
+        const monthlyInterestRate = annualInterestRate / (12 * 100);
+
+        // Convert tenure in years to number of months
+        const tenureInMonths = tenureInYears * 12;
+
+        // Calculate EMI using the formula
+        const emi = loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, tenureInMonths) /
+            (Math.pow(1 + monthlyInterestRate, tenureInMonths) - 1);
+
+        // Return the EMI rounded to 2 decimal places
+        return emi.toFixed(2);
+    }
+
+    function calculateTotalLoanAmount(loanAmount, tenure, annualInterestRate) {
+        // Convert annual interest rate to monthly interest rate (in decimal)
+        const monthlyInterestRate = annualInterestRate / 100 / 12;
+
+        // Calculate the total loan amount due using the formula for compound interest
+        const totalAmountDue = loanAmount * Math.pow(1 + monthlyInterestRate, tenure);
+
+        // Round the result to two decimal places for currency format
+        return totalAmountDue.toFixed(2);
+    }
 
     const submitForm = async (e) => {
         e.preventDefault();
@@ -145,8 +170,8 @@ const LoanForm = () => {
                 setFormData({ ...formData, city: cityRef.current.value, state: selectedState, pincode: pincodeRef.current.value, loanamount: loanAmountRef.current.value, loantype: selectedLoanType, tenure: selectedTenure })
                 console.log(response, "Form Data");
                 setCurrentFormStep(3);
-                await fetch("/api/send-email/loan-approved", { method: "POST", body: JSON.stringify({ refId: docId, name: formData.name, to: formData.email, amount: loanAmountRef.current.value, tenure: selectedTenure }), headers: { 'Content-Type': "application/json" } });
-                router.push(`/thankyou/${docId}`)
+                await fetch("/api/send-email/loan-received", { method: "POST", body: JSON.stringify({ refId: docId, name: formData.name, to: formData.email, amount: loanAmountRef.current.value, tenure: selectedTenure }), headers: { 'Content-Type': "application/json" } });
+                setCurrentFormStep(4);
             } catch (err) {
                 console.log(err);
             }
@@ -521,6 +546,7 @@ const LoanForm = () => {
                             <option value={19}>19 Year</option>
                             <option value={20}>20 Year</option>
                         </select>
+                        {loanAmountRef && selectedTenure && <p style={{ fontSize: 13, marginBottom: 0 }} >Monthly Emi {calculateEMI(loanAmountRef.current.value, 6.99, selectedTenure)} X  {selectedTenure * 12} Months = {calculateTotalLoanAmount(loanAmountRef.current.value, selectedTenure * 12, 6.99)} (Total Repayment Amount)</p>}
                     </div>
                     <div className="col-md-12 mb-1" bis_skin_checked={1}>
                         <select
@@ -549,6 +575,31 @@ const LoanForm = () => {
                     </div>
                 </div>
             </div>}
+
+            {/* Form step 4 */}
+
+            {currentFormStep == 4 && <div className="" bis_skin_checked={1}>
+                <div className="row list-input" bis_skin_checked={1}>
+                    <div className="col-lg-12 col-md-12" bis_skin_checked={1}>
+                        <div
+                            className="alert alert-default"
+                            style={{ background: "#fff" }}
+                            bis_skin_checked={1}
+                        >
+                            <div className="text-center" bis_skin_checked={1}>
+                                <img src="https://www.indiadhaniservice.co.in/frantend/hide.png" />
+                            </div>
+                            <h4 className="pt-2 pb-2">Congratulations! {formData.name}</h4>
+                            <h6>
+                                Your Personal Loan application is submitted. You have successfully applied
+                                for the loan of Rs. {formData.loanamount}. The Monthly Installment you will have to pay
+                                EMI is Rs.{calculateEMI(formData.loanamount, 6.99, formData.tenure)}.
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
         </form>
     </>
 }
