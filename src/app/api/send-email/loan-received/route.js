@@ -14,15 +14,15 @@ export async function POST(req) {
         document = document.data();
         console.log(document, "Document")
         const transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com', // Correct host for Gmail
-            port: 587,             // SMTP port
-            secure: false,  // Use TLS
-            auth: {
-                user: "akashrajpp1@gmail.com", // Your email address
-                pass: "hmlw iaee sjtc pxii"
-                , // Your email password or app-specific password
-            },
-        });
+                    host: 'smtpout.secureserver.net', // Correct host for Gmail
+                    port: 465,             // SMTP port
+                    secure: false,  // Use TLS
+                    auth: {
+                        user: "support@dhaniloanfinances.in", // Your email address
+                        pass: "Akashraj@123"
+                        , // Your email password or app-specific password
+                    },
+                });
 
         function calculateEMI(loanAmount, annualInterestRate, tenureInYears) {
             // Convert annual interest rate to monthly interest rate
@@ -82,7 +82,7 @@ support@dhanifl.com`
 
         // Define email options
         const mailOptions = {
-            from: "akashrajpp1@gmail.com", // Sender address
+            from: "support@dhaniloanfinances.in", // Sender address
             to: to,// Recipient email address
             subject: `Loan Request Received – Next Steps | Dhani`, // Email subject
             text: emailContent, // Plain text body
