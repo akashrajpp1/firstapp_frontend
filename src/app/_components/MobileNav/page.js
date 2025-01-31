@@ -1,7 +1,11 @@
-const MobileNav = ()=>{
-    return <><div className="mr-menu" bis_skin_checked={1}>
+"use client"
+const MobileNav = () => {
+  const toggleMobileNave = () => {
+    document.body.classList.remove("mr-menu_active");
+  }
+  return <><div className="mr-menu" bis_skin_checked={1}>
     <div className="mr-menu_overlay" bis_skin_checked={1} />
-    <button type="button" className="mr-menu_close">
+    <button type="button" onClick={toggleMobileNave} className="mr-menu_close">
       <i className="bi bi-x-lg" />
     </button>
     <div className="logo" bis_skin_checked={1}>
@@ -23,12 +27,12 @@ const MobileNav = ()=>{
           </a>
         </li>
         <li className="menu-item ">
-          <a href="https://indiadhaniservice.co.in/check-status" id="">
+          <a href="/check-status" id="">
             <span>Check Status</span>
           </a>
         </li>
         <li className="menu-item ">
-          <a href="https://indiadhaniservice.co.in/about" id="">
+          <a href="/about" id="">
             <span>About Us</span>
           </a>
         </li>
@@ -46,17 +50,17 @@ const MobileNav = ()=>{
                         </ul>
                     </li>*/}
         <li className="menu-item">
-          <a href="https://indiadhaniservice.co.in/contact-us" id="">
+          <a href="/contact" id="">
             <span>Contact Us</span>
           </a>
         </li>
         <li className="menu-item ">
-          <a href="https://indiadhaniservice.co.in/check-status" id="">
+          <a href="/check-status" id="">
             <span>My Account</span>
           </a>
         </li>
         <li className="menu-item ">
-          <a href="https://indiadhaniservice.co.in/check-status" id="">
+          <a href="/check-status" id="">
             <span>DSA Login</span>
           </a>
         </li>

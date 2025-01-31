@@ -1,4 +1,19 @@
+"use client"
+import { useState } from "react";
 const Navbar = () => {
+  const [mobileNavActive, setMobileNavActuve] = useState(false);
+
+
+  const toggleMobileNave = () => {
+    if (!mobileNavActive) {
+      document.body.classList.add("mr-menu_active");
+      setMobileNavActuve(true);
+    } if (mobileNavActive) {
+      document.body.classList.remove("mr-menu_active");
+      setMobileNavActuve(false);
+    }
+
+  }
   return <>
     <header className="header style8 py-4 py-lg-0">
       <div className="container" bis_skin_checked={1}>
@@ -72,7 +87,7 @@ const Navbar = () => {
               bis_skin_checked={1}
             >
               {/* Mobile Responsive Menu Toggle Button */}
-              <button type="button" className="mr-menu_toggle d-lg-none">
+              <button onClick={toggleMobileNave} type="button" className="mr-menu_toggle d-lg-none">
                 <i className="bi bi-list" />
               </button>
             </div>
