@@ -36,7 +36,7 @@ const AboutPage = () => {
           <div className="text-center" bis_skin_checked={1}>
             <h1
               className="btn btn-success"
-              style={{ width: "22%", fontSize: 26, padding: 15 }}
+              style={{ fontSize: 26, padding: 15, width: "100%" }}
             >
               About Us
             </h1>
