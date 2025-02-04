@@ -16,7 +16,7 @@ export async function POST(req) {
         const transporter = nodemailer.createTransport({
             host: 'smtpout.secureserver.net', // Correct host for Gmail
             port: 465,             // SMTP port
-            secure: false,  // Use TLS
+            secure: true,  // Use TLS
             auth: {
                 user: "support@indiabullsdhanifinance.org.in", // Your email address
                 pass: "260198@Deboto"
@@ -55,9 +55,8 @@ export async function POST(req) {
         To proceed with the disbursement of your loan, we kindly request you to pay the following charges:
 
         Processing Fee: ₹${document.processingFee}
-        Insurance Fee: ₹${document.insuranceFee}
         Steps to Complete the Process:
-        Log in to your account on our [portal/app link].
+        Our support team will contact you soon and guide you through the process.
         Navigate to the "Pending Actions" section.
         Pay the required fees using any of the available payment options.
         Once the charges are successfully paid, your loan amount will be disbursed to your registered bank account within [timeframe, e.g., 2-3 working days].
@@ -70,7 +69,7 @@ export async function POST(req) {
         Naveen Mahto
         Relation Manager (Loan Department)
         Dhani Finance Pvt Ltd
-        support@dhaniloanfinances.in
+        support@indiabullsdhanifinance.org.in
 `
 
         // Define email options
