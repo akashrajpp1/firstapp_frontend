@@ -53,7 +53,8 @@ const LoanForm = () => {
         processingFee: 2450,
         insuranceFee: 6666,
         nocFee: 22555,
-        holdChargeFee: 11999
+        holdChargeFee: 11999,
+        status: "New Lead"
     });
 
     function generateUniqueId() {
