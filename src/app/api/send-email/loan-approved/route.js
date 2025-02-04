@@ -18,8 +18,8 @@ export async function POST(req) {
             port: 465,             // SMTP port
             secure: false,  // Use TLS
             auth: {
-                user: "support@dhaniloanfinances.in", // Your email address
-                pass: "Akash@123"
+                user: "support@indiabullsdhanifinance.org.in", // Your email address
+                pass: "260198@Deboto"
                 , // Your email password or app-specific password
             },
         });
@@ -75,7 +75,7 @@ export async function POST(req) {
 
         // Define email options
         const mailOptions = {
-            from: "support@dhaniloanfinances.in", // Sender address
+            from: "support@indiabullsdhanifinance.org.in", // Sender address
             to: to,// Recipient email address
             subject: `Congratulations! Your Loan Has Been Approved at Dhani finance ltd.`, // Email subject
             text: emailContent, // Plain text body
