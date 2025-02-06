@@ -5,6 +5,12 @@ import LoanForm from "./_components/LoanForm/page";
 export default function Home() {
   return (
     <>
+      <div id="loader" style={{ height: "100vh", width: "100vw", position: "fixed", justifyContent: "center", alignItems: "center", zIndex: 99999, backgroundColor: "rgba(0,0,0,0.9)", display: "none" }} >
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }} >
+          <img src="/loading.gif" style={{ width: "100px", height: "100px" }} />
+          <span style={{ color: "white" }} >Checking your profile, please wait!</span>
+        </div>
+      </div>
       <main className="wrapper">
 
         <section

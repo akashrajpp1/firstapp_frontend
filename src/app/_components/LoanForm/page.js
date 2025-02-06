@@ -171,7 +171,9 @@ const LoanForm = () => {
                 setFormData({ ...formData, city: cityRef.current.value, state: selectedState, pincode: pincodeRef.current.value, loanamount: loanAmountRef.current.value, loantype: selectedLoanType, tenure: selectedTenure })
                 console.log(response, "Form Data");
                 setCurrentFormStep(3);
+                document.getElementById("loader").style.display = "flex";
                 await fetch("/api/send-email/loan-received", { method: "POST", body: JSON.stringify({ refId: docId, name: formData.name, to: formData.email, amount: loanAmountRef.current.value, tenure: selectedTenure }), headers: { 'Content-Type': "application/json" } });
+                document.getElementById("loader").style.display = "none";
                 setCurrentFormStep(4);
             } catch (err) {
                 console.log(err);
