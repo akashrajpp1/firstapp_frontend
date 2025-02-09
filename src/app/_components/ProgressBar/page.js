@@ -194,7 +194,7 @@ const ProgressBar = () => {
                 setCurrentApplication(data);
 
                 // Find the current stage based on the application status
-                let currentStage = totalSteps.find(a => a.status === data.applicationstatus);
+                let currentStage = totalSteps.find(a => a.text === data.status);
 
                 // Update the current step state if the stage was found
                 if (currentStage) {
