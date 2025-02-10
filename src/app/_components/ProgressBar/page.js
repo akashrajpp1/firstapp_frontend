@@ -218,7 +218,7 @@ const ProgressBar = () => {
     }, []);
 
     useEffect(() => {
-        document.getElementById("message_content").innerHTML = totalSteps[currentStep].message;
+        document.getElementById("message_content").innerHTML = totalSteps[currentStep + 1].message;
     }, [currentStep])
 
 
