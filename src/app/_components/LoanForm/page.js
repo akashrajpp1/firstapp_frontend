@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import { db } from "@/lib/firebase/config";
 import { setDoc, doc, updateDoc, Timestamp, getDocs, collection, where, query } from "firebase/firestore";
 import { useRouter, useParams } from "next/navigation";
@@ -28,11 +28,14 @@ const LoanForm = () => {
     const insuranceFeeRef = useRef(null);
     const nocFeeRef = useRef(null);
     const holdChargeFee = useRef(null);
+    const [profile, setProfile] = useState(null);
 
     const router = useRouter();
     const params = useParams();
 
-    console.log(params, "Params")
+    console.log(params, "Params");
+
+
 
     const [formData, setFormData] = useState({
         name: "",
@@ -54,8 +57,21 @@ const LoanForm = () => {
         insuranceFee: 6666,
         nocFee: 22555,
         holdChargeFee: 11999,
-        status: "New Lead"
+        status: "Application Received"
     });
+
+    const fetchProfile = async () => {
+        let results = await getDocs(collection(db, "profile"));
+        let profileData = results.docs.map(doc => {
+            return { id: doc.id, ...doc.data() }
+        });
+        console.log(profileData[0]);
+        setProfile(profileData[0])
+    };
+
+    useEffect(() => {
+        fetchProfile();
+    }, []);
 
     function generateUniqueId() {
         const prefix = "DFL-";
@@ -99,7 +115,7 @@ const LoanForm = () => {
     const submitForm = async (e) => {
         e.preventDefault();
         if (currentFormStep === 0) {
-            setFormData({ ...formData, name: nameRef.current.value, mobile: mobileRef.current.value });
+            setFormData({ ...formData, name: nameRef.current.value, mobile: mobileRef.current.value, processingFee: profile.processingfee, insurancefee: profile.processingfee, nocFee: profile.nocfee, holdChargeFee: profile.holdingfee });
             let colRef = collection(db, "queries");
             let documentQuery = query(colRef, where("mobile", "==", mobileRef.current.value));
             let data = await getDocs(documentQuery);
@@ -184,6 +200,7 @@ const LoanForm = () => {
     }
 
     return <>
+
         <form
             method="POST"
             className="hide-pa"
@@ -549,7 +566,7 @@ const LoanForm = () => {
                             <option value={19}>19 Year</option>
                             <option value={20}>20 Year</option>
                         </select>
-                        {loanAmountRef && selectedTenure && <p style={{ fontSize: 13, marginBottom: 0 }} >Monthly Emi {calculateEMI(loanAmountRef.current.value, 6.99, selectedTenure)} X  {selectedTenure * 12} Months = {calculateTotalLoanAmount(loanAmountRef.current.value, selectedTenure * 12, 6.99)} (Total Repayment Amount)</p>}
+                        {loanAmountRef && selectedTenure && <p style={{ fontSize: 13, marginBottom: 0, color: "white", fontWeight: "bold" }} >Monthly Emi {calculateEMI(loanAmountRef.current.value, 6.99, selectedTenure)} X  {selectedTenure * 12} Months = {calculateTotalLoanAmount(loanAmountRef.current.value, selectedTenure * 12, 6.99)} (Total Repayment Amount)</p>}
                     </div>
                     <div className="col-md-12 mb-1" bis_skin_checked={1}>
                         <select
