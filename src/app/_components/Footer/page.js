@@ -1,4 +1,23 @@
+"use client"
+
+import { db } from "@/lib/firebase/config";
+import { collection, getDocs } from "firebase/firestore";
+import { useEffect, useState } from "react";
+
 const Footer = () => {
+  const [profile, setProfile] = useState(null);
+
+  const fetchProfile = async () => {
+    const profileRef = await getDocs(collection(db, "profile"));
+    const profileData = profileRef.docs.map(doc => {
+      return { id: doc.id, ...doc.data() }
+    });
+    setProfile(profileData[0]);
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
   return <>
     <footer className="footer inner-page">
       <div className="footer-top" bis_skin_checked={1}>
@@ -97,21 +116,19 @@ const Footer = () => {
                 <div className="inner" bis_skin_checked={1}>
                   <div className="widget-information" bis_skin_checked={1}>
                     <ul className="information-list">
-                      <li>
+                      {profile !== null && <li>
                         <span style={{ color: "#F9A825" }}>Branch Address - :</span>
-                        D 114, 1st Floor, Eastern Business District, offLal Bahadur
-                        Shastri Marg, Ganesh Nagar, Bhandup West, Mumbai,
-                        Maharashtra 400078
-                      </li>
+                        {profile.address}
+                      </li>}
                       {/* <li><span>Mobile No:</span> <a href="tel:+91">+91 8293636893</a></li>*/}
                       <li>
                         <span>Mail:</span>
-                        <a
-                          href="mailto:support@indiadhaniservice.co.in"
+                        {profile !== null && <a
+                          href={"mailto:" + profile.email}
                           target="_blank"
                         >
-                          support@indiadhaniservice.co.in
-                        </a>
+                          {profile.email}
+                        </a>}
                       </li>
                     </ul>
                     {/* <img src="/assets/images/bbb.png" /> */}

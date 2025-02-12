@@ -1,12 +1,23 @@
 "use client"
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getDocs, collection, query, where } from "firebase/firestore";
 import { db } from "@/lib/firebase/config";
 import { useRouter } from "next/navigation";
 
 const ContactPage = () => {
+  const [profile, setProfile] = useState(null);
 
+  const fetchProfile = async () => {
+    let profileRef = await getDocs(collection(db, "profile"));
+    let profileData = profileRef.docs.map(doc => {
+      return { id: doc.id, ...doc.data() }
+    });
+    setProfile(profileData[0]);
+  }
+  useEffect(() => {
+    fetchProfile();
+  }, []);
   return <>
     <main className="wrapper">
       <style
@@ -43,7 +54,7 @@ const ContactPage = () => {
           <div className="text-center" bis_skin_checked={1}>
             <h1
               className="btn btn-success"
-              style={{ fontSize: 26, padding: 15, width: "100%" }}
+              style={{ width: "22%", fontSize: 26, padding: 15, width: "100%" }}
             >
               Contact Us
             </h1>
@@ -70,7 +81,7 @@ const ContactPage = () => {
                   <br />
                   <br />
                   <i className="bi bi-telephone-fill" />
-                  Whatsapp Support:- 91 8293636893
+                  Whatsapp Support:- {profile && profile.mobile}
                 </h5>
               </div>
             </div>
